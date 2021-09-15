@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bxm-instance xmlns="http://www.bankwareglobal.com/schema/instance"
+        xmlns:cn="http://www.bankwareglobal.com/schema/common" name="bxm-instance">
+    <description>BXM Online Configuration</description>
+    <environment>
+        <system-properties>
+            beantype.usemetadata=true
+            accrue.data.accesstime=true
+            accrue.beanfactory.accesstime=true
+        </system-properties>
+        <system-mode>D</system-mode>
+        <datasource>
+            <jndi-datasource jndi-name="java:/comp/env/BXMNXA">
+            </jndi-datasource>
+        </datasource>
+        <loader mode="hot" autodeploy="true" interval-millis="8000" registry="off"
+                        lazy-init="true" deferred-init="false" sessionfactory-lazyinit="true"
+                        use-lastmodified-cache="true" instance-registry="off" cache-ioproperties="on">
+            <application-home>C:/BXM/localDev/apps/online</application-home>
+            <instrument>
+                <cn:transformer classname="bxm.dft.transform.PrintServiceLogTagTransformer" order="1">
+                    <cn:typefilter rule="include" type="regex" expression="bxm.*.bean.*"/>
+                </cn:transformer>
+            </instrument>
+        </loader>
+    </environment>
+
+    <management>
+        <connector serviceurl="service:jmx:rmi:///jndi/rmi://localhost:51642/jmxrmi">
+            <environment>
+            </environment>
+        </connector>
+        <objectname domain="JRF">
+            <properties>
+                Name=bxm-management
+            </properties>
+        </objectname>
+    </management>
+
+
+    <context forced-timeout="30000">
+        <preprocessor classname="kr.fingle.service.processor.FingleSystemPreProcessor" order="1"/>
+        <postprocessor classname="kr.fingle.service.processor.FingleSystemPostProcessor" order="1"/>
+        <postprocessor classname="bxm.dft.service.processor.DefaultServiceLogPostProcessor" order="2"/>
+        <control-parameter classname="kr.fingle.context.control.impl.FingleControlParametersImpl"/>
+        <transaction-rollbackfors>
+            bxm.app.ApplicationException
+            kr.fingle.app.FingleApplicationException
+        </transaction-rollbackfors>
+        <request header-classname="kr.fingle.context.FingleSystemHeader" imagelogging="true"
+                request-resolver-classname="kr.fingle.request.FingleRequestResolver"
+                response-resolver-classname="kr.fingle.request.FingleResponseResolver"
+                request-trace-classname="kr.fingle.request.FingleRequestTrace"
+                interceptor-classname="kr.fingle.service.endpoint.FingleRequestInterceptor"
+                service-executor-interceptor-classname="kr.fingle.service.FingleServiceExecutorInterceptor"
+                />
+    </context>
+
+    <data-access trace-inject="false" monitor-inject="false" identify-inject="true"
+        max-resultset="5000" fetch-size="100" min-fetch-size="100"
+        limit-exceeded-action="Error" forced-logging="false">
+        <jndi-datasource-aliases>
+            <alias name="java:/comp/env/APPNXA" alias="BXMNXA"/>
+            <alias name="java:/comp/env/APPXA" alias="BXMXA"/>
+            <alias name="java:/comp/env/APPNXA" alias="APPNXA"/>
+            <alias name="java:/comp/env/APPXA" alias="APPXA"/>
+        </jndi-datasource-aliases>
+    </data-access>
+
+    <message message-source-classname="bxm.instance.message.DatabaseMessageSource"/>
+    <system-message message-source-classname="bxm.instance.message.SystemDatabaseMessageSource" />
+</bxm-instance>

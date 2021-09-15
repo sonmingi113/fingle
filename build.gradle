@@ -1,0 +1,81 @@
+// Apply the java plugin to add support for Java
+//apply plugin: 'java'
+apply plugin: 'war'
+apply plugin: 'eclipse'
+
+buildDir = 'build'
+
+[compileJava, compileTestJava]*.options*.encoding = 'UTF-8'
+
+sourceCompatibility=javaVersion
+targetCompatibility=javaVersion
+
+// 바이너리 저장소 정보
+repositories {
+	maven {
+		url "${repositoryUrl}"
+		credentials {
+			username "${userName}"
+			password "${userPasswd}"
+		}
+	}
+}
+
+// In this section you declare the dependencies for your production and test code
+dependencies {
+	// Add Spring Context
+	providedCompile "org.springframework:spring-context:$springVersion"
+	providedCompile "org.springframework:spring-web:$springVersion"
+	
+    providedCompile "org.springframework:spring-webmvc:$springVersion"
+    providedCompile "org.springframework:spring-jdbc:$springVersion"
+    
+    providedCompile "org.springframework:spring-beans:$springVersion"
+    
+    //compile "org.apache.commons:commons-lang3:$commonsLangVersion"
+    providedCompile "com.fasterxml.jackson.core:jackson-databind:$jacksonVersion"
+
+    providedCompile "javax.servlet:javax.servlet-api:$servletApiVersion"
+
+    testCompile "junit:junit-dep:$junitVersion"
+    testCompile "org.springframework:spring-test:$springVersion"
+    //testCompile "org.mockito:mockito-core:$mockitoVersion"
+    testCompile "org.hamcrest:hamcrest-library:$hamcrestVersion"
+
+    // The production code uses the SLF4J logging API at compile time
+    providedCompile 'org.slf4j:slf4j-api:1.7.30'
+
+    providedCompile group: 'bxm-runtime-extension', name: 'fingle-extension', version:'1.0.0', transitive: false 
+    providedCompile group: 'bxm-runtime', name: 'bxm-common', version:'4.0.5', transitive: false
+    providedCompile group: 'bxm-runtime', name: 'bxm-container', version:'4.0.5', transitive: false
+    providedCompile group: 'bxm-runtime', name: 'bxm-omm-common', version:'4.0.5', transitive: false
+    
+    // swagger  
+    providedCompile 'io.springfox:springfox-swagger2:2.9.2'
+    providedCompile 'io.springfox:springfox-swagger-ui:2.9.2'
+    providedCompile 'io.springfox:springfox-core:2.9.2'
+    providedCompile 'io.springfox:springfox-spi:2.9.2'
+    providedCompile 'io.springfox:springfox-spring-web:2.9.2'
+    providedCompile 'io.springfox:springfox-swagger-common:2.9.2'
+    providedCompile 'io.springfox:springfox-schema:2.9.2'
+    
+    providedCompile 'io.swagger:swagger-models:1.5.20'
+    providedCompile 'io.swagger:swagger-annotations:1.5.20'
+    
+    providedCompile 'com.google.guava:guava:20.0'
+    providedCompile 'net.bytebuddy:byte-buddy:1.8.12'
+    providedCompile 'com.fasterxml:classmate:1.4.0'
+    providedCompile 'org.mapstruct:mapstruct:1.2.0.Final'
+    
+    providedCompile 'org.springframework.plugin:spring-plugin-core:1.2.0.RELEASE'
+    providedCompile 'org.springframework.plugin:spring-plugin-metadata:1.2.0.RELEASE'
+    //compile 'io.springfox:springfox-bean-validators:2.9.2'
+    //compile 'io.springfox:springfox-data-rest:2.9.2'
+
+    // Declare the dependency for your favourite test framework you want to use in your tests.
+    // TestNG is also supported by the Gradle Test task. Just change the
+    // testCompile dependency to testCompile 'org.testng:testng:6.8.1' and add
+    // 'test.useTestNG()' to your build script.
+//    testCompile 'junit:junit:4.12'
+
+}

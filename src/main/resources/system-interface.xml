@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bxm-interface xmlns="http://www.bankwareglobal.com/schema/instance"
+			xmlns:cn="http://www.bankwareglobal.com/shcema/common">
+	<description>Bxm Interface Configuration</description>
+	<interface>
+		<chan id="CHAN_TEST"
+			executor-classname="kr.fingle.interact.test.TestExecutor"
+			header-classname=""
+			serverUrl="http://localhost:8080/fingle/httpService/request.json"
+			encoding="UTF-8"
+			connect-timeout="10000" max-wait="30000">
+		</chan>
+	</interface>			
+</bxm-interface>

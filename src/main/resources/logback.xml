@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration scan="false">
+
+    <property name="LOGS_ABSOLUTE_PATH" value="C:/BXM/localDev/logs" />
+
+    <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>[%d{yyyy-MM-dd HH:mm:ss.SSS}][%-5level][%logger{36}:%line][%thread] - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+
+    <appender name="applogfile" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${LOGS_ABSOLUTE_PATH}/online/app_${bxm.node.name}_${bxm.instance.name}.log</file>
+        <encoder>
+            <pattern>[%d{yyyy-MM-dd HH:mm:ss.SSS}][%X{GUID}][%-5level][%logger{36}:%line] - %msg%n</pattern>
+        </encoder>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${LOGS_ABSOLUTE_PATH}/online/app_${bxm.node.name}_${bxm.instance.name}.%d{yyyy-MM-dd}.log</fileNamePattern>
+            <maxHistory>30</maxHistory>
+            <totalSizeCap>3GB</totalSizeCap>
+        </rollingPolicy>
+    </appender>
+
+    <appender name="applogdb" class="bxm.dft.logging.logback.DefaultAsyncTableAppender">
+        <connectionSource class="ch.qos.logback.core.db.JNDIConnectionSource">
+             <jndiLocation>java:BXMNXA</jndiLocation> 
+             <!--<jndiLocation>java:/comp/env/BXMNXA</jndiLocation> -->
+        </connectionSource>
+        <bufferSize>5</bufferSize>
+        <pattern>[%-5level][%d{yyyy-MM-dd HH:mm:ss.SSS}][%logger{36}:%line] - %msg%n</pattern>
+    </appender>
+
+    <root level="trace">
+        <appender-ref ref="console" />
+        <appender-ref ref="applogfile" />
+        <appender-ref ref="applogdb" />
+    </root>
+
+</configuration>
+
