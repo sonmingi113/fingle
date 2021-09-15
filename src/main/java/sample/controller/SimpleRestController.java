@@ -55,13 +55,13 @@ public class SimpleRestController {
     public @ResponseBody Map<String,Object> SSMP1001A003Map(@RequestBody Map<String,Object> svcInput )
     {
         logger.debug( "************************************************************");
-        FingleSystemHeader cHeader = createSystemHeader("SSMP1001A003");
+        FingleSystemHeader cHeader = createSystemHeader("SSMP001");
 
-        logger.info(  "ZZZZ TRXCD : {}, SystemHeader : {}, svcInput : {}", cHeader.getTrxCd(), cHeader, svcInput);
+        logger.info(  "ZZZZ1 TRXCD : {}, SystemHeader : {}, svcInput : {}", cHeader.getTrxCd(), cHeader, svcInput);
 
         Map<String,Object> result = FingleControllerServiceEndpoint.doService(cHeader, svcInput);
         logger.debug( "************************************************************");
-        logger.info(  "ZZZZ TRXCD : {}, Result : {}", cHeader.getTrxCd(), result);
+        logger.info(  "ZZZZ1 TRXCD : {}, Result : {}", cHeader.getTrxCd(), result);
         
         return result;
     }
@@ -70,7 +70,7 @@ public class SimpleRestController {
     public @ResponseBody SSMP1001A003OutDto SSMP1001A003Object(@RequestBody SSMP1001A003InDto svcInput )
     {
         logger.debug( "************************************************************");
-        FingleSystemHeader cHeader = createSystemHeader("SSMP1001A003");
+        FingleSystemHeader cHeader = createSystemHeader("SSMP001");
 
         logger.info(  "ZZZZ TRXCD : {}, SystemHeader : {}, svcInput : {}", cHeader.getTrxCd(), cHeader, svcInput);
 
@@ -85,7 +85,7 @@ public class SimpleRestController {
     public @ResponseBody Map<String,Object>SAMPLE0001Map(@RequestBody Map<String,Object> svcInput )
     {
         logger.debug( "************************************************************");
-        FingleSystemHeader cHeader = createSystemHeader("SAMPLE0001");
+        FingleSystemHeader cHeader = createSystemHeader("SSMP001");
 
         logger.info(  "ZZZZ TRXCD : {}, SystemHeader : {}, svcInput : {}", cHeader.getTrxCd(), cHeader, svcInput);
 
@@ -100,7 +100,7 @@ public class SimpleRestController {
     public @ResponseBody SAMPLE0001OutDto SAMPLE0001Object(@RequestBody SAMPLE0001InDto svcInput )
     {
         logger.debug( "************************************************************");
-        FingleSystemHeader cHeader = createSystemHeader("SAMPLE0001");
+        FingleSystemHeader cHeader = createSystemHeader("SSMP001");
 
         logger.info(  "ZZZZ TRXCD : {}, SystemHeader : {}, svcInput : {}", cHeader.getTrxCd(), cHeader, svcInput);
 
